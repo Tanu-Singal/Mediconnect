@@ -49,7 +49,7 @@ payload.append("age", profile.age);
 payload.append("gender", profile.gender);
 payload.append("address", profile.address);
 
-fetch("http://localhost:8000/ask",{
+fetch("https://mediconnect-backend1-r5kg.onrender.com/ask",{
   method:"POST",
   body:payload
 })
