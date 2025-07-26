@@ -41,7 +41,7 @@ const [selectedTime, setSelectedTime] = useState(null);
       const minutes = selectedTime.getMinutes().toString().padStart(2, '0');
     
       const timeStr = `${hours}:${minutes}`;
-     const res = await fetch("http://localhost:8000/book-appoint", {
+     const res = await fetch("https://mediconnect-backend1-r5kg.onrender.com/book-appoint", {
       method: "POST",
       headers: {
       "Content-Type": "application/json" 
