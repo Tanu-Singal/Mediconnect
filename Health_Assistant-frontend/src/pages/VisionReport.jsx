@@ -12,7 +12,7 @@ const VisionReport = () => {
     const formData=new FormData();
     formData.append("file",file)
     try{
-      const res = await fetch("http://localhost:8000/analyze-prescription", {
+      const res = await fetch("https://mediconnect-backend1-r5kg.onrender.com/analyze-prescription", {
         method:"POST",
         body:formData
       })
