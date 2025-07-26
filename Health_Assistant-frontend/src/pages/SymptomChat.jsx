@@ -18,7 +18,7 @@ const SymptomChat = ({ messages, setMessages }) => {
     setInput("");
 
     try {
-      const res = await fetch("http://localhost:8000/chat-agent", {
+      const res = await fetch("https://mediconnect-backend1-r5kg.onrender.com/chat-agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: finalInput, phone }),
