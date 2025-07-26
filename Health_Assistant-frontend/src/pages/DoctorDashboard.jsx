@@ -20,7 +20,7 @@ const [newTime, setNewTime] = useState("");
   useEffect(()=>{
     const fetchappointment=async()=>{
         try{
-            const res=await fetch(`http://localhost:8000/get-doctor-appointment?contact=${contact}`)
+            const res=await fetch(`https://mediconnect-backend1-r5kg.onrender.com/get-doctor-appointment?contact=${contact}`)
             const data=await res.json()
             setAppointments(data.appointments || [])
         }catch {
@@ -33,7 +33,7 @@ const [newTime, setNewTime] = useState("");
 
   const cancelAppointment=async(id)=>{
     try {
-        const res=await fetch(`http://localhost:8000/cancel-appointment/${id}`,{
+        const res=await fetch(`https://mediconnect-backend1-r5kg.onrender.com/cancel-appointment/${id}`,{
             method:"DELETE",
         })
         if(res.ok){
@@ -51,7 +51,7 @@ const [newTime, setNewTime] = useState("");
 
 const handleStatusUpdate = async (id, status) => {
   try {
-    let res=await fetch(`http://localhost:8000/update-appointment-status/${id}`,{
+    let res=await fetch(`https://mediconnect-backend1-r5kg.onrender.com/update-appointment-status/${id}`,{
       method:"PUT",
       headers:{ "Content-Type": "application/json"},
       body:JSON.stringify({status})
@@ -82,7 +82,7 @@ const handleschedule=async(id)=>{
   });
 
   try {
-    const re=await fetch(`http://localhost:8000/reschedule-appointment/${id}`,{
+    const re=await fetch(`https://mediconnect-backend1-r5kg.onrender.com/reschedule-appointment/${id}`,{
       method:"PUT",
       headers:{"Content-Type": "application/json"},
       body:JSON.stringify({date:formattedDate,time:formattedTime})
