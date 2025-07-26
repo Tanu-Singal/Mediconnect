@@ -34,7 +34,7 @@ const MedicalReport = () => {
         formData.append("ocr_text", text);
        formData.append("phone", phone);
        formData.append("image", selectedImage); 
-        const res=await fetch("http://localhost:8000/rag-summary",{
+        const res=await fetch("https://mediconnect-backend1-r5kg.onrender.com/rag-summary",{
             method:"POST",
             body:formData
         })
