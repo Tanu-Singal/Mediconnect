@@ -22,7 +22,7 @@ const HospitalLocator = () => {
         setLocation({ lat, lng });
 
        try{
-           const res=await fetch("http://localhost:8000/nearby-places",{
+           const res=await fetch("https://mediconnect-backend1-r5kg.onrender.com/nearby-places",{
              method: "POST",
             headers: {
               "Content-Type": "application/json",
