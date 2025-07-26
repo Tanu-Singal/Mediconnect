@@ -52,7 +52,7 @@ const addSlot = () => {
     const fetchdoc=async()=>{
       try {
         
-        const re=await fetch(`http://localhost:8000/get-doctor-profile?contact=${contact}`)
+        const re=await fetch(`https://mediconnect-backend1-r5kg.onrender.com/get-doctor-profile?contact=${contact}`)
         const data=await re.json();
         if(data.success)
         {
@@ -78,7 +78,7 @@ const addSlot = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:8000/doctor-login", {
+      const res = await fetch("https://mediconnect-backend1-r5kg.onrender.com/doctor-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(doctor),
