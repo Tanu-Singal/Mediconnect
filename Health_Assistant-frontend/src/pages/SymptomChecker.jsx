@@ -43,7 +43,7 @@ const handleFollowUpReply = async () => {
   console.log("Sending follow-up count:", followUpCount);
 
   try {
-    const res = await fetch("http://localhost:8000/follow-up", {
+    const res = await fetch("https://mediconnect-backend1-r5kg.onrender.com/follow-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -102,7 +102,7 @@ const symptoms = userInputMsgs.at(-1)?.message || "N/A";
   };
 
   try {
-    const reportRes = await fetch("http://localhost:8000/save-report", {
+    const reportRes = await fetch("https://mediconnect-backend1-r5kg.onrender.com/save-report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reportPayload),
@@ -138,7 +138,7 @@ const symptoms = userInputMsgs.at(-1)?.message || "N/A";
   data.append("query", query);
 
   try {
-    const res = await fetch("http://localhost:8000/symptom-check", {
+    const res = await fetch("https://mediconnect-backend1-r5kg.onrender.com/symptom-check", {
       method: "POST",
       body: data,
     });
@@ -187,7 +187,7 @@ console.log("🧾 full_conversation:", fullConversation);
   };
 
   try {
-    const reportRes = await fetch("http://localhost:8000/save-report", {
+    const reportRes = await fetch("https://mediconnect-backend1-r5kg.onrender.com/save-report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reportPayload),
@@ -217,7 +217,7 @@ console.log("🧾 full_conversation:", fullConversation);
 
   const getDoctors = async (specialization) => {
     try {
-      const res = await fetch("http://localhost:8000/find-doctors", {
+      const res = await fetch("https://mediconnect-backend1-r5kg.onrender.com/find-doctors", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ specialization }),
@@ -254,7 +254,7 @@ console.log("🧾 full_conversation:", fullConversation);
     };
 
     try {
-      const res = await fetch("http://localhost:8000/book-appointment", {
+      const res = await fetch("https://mediconnect-backend1-r5kg.onrender.com/book-appointment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
