@@ -9,7 +9,7 @@ const Appointment = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", age: "", location: "" });
   useEffect(() => {
-    fetch("http://localhost:8000/all_doctors")
+    fetch("https://mediconnect-backend1-r5kg.onrender.com/all_doctors")
       .then((res) => res.json())
       .then((data) => setDoctors(data.doctors || data))
       .catch((err) => console.error("Error:", err));
@@ -46,7 +46,7 @@ const Appointment = () => {
       time: selectedSlot.time,
     };
     try {
-      const res=await fetch("http://localhost:8000/book-appointment",{
+      const res=await fetch("https://mediconnect-backend1-r5kg.onrender.com/book-appointment",{
         method:"POST",
         headers:{ "Content-Type": "application/json" },
         body:JSON.stringify(payload)
