@@ -46,7 +46,7 @@ init_collect(doc_col=db["doctors"],appoint_col=db["appointments"])
  
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["https://mediconnect4.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
