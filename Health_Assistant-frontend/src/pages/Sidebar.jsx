@@ -16,7 +16,7 @@ const Sidebar = ({ startNewChat }) => {
       if (!phone) return;
 
       try {
-        const res = await fetch(`http://localhost:8000/history?phone=${phone}`);
+        const res = await fetch(`https://mediconnect-backend1-r5kg.onrender.com/history?phone=${phone}`);
         const data = await res.json();
         setHistory(data.history || []);
       } catch (err) {
