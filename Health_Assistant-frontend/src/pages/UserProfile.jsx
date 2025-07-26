@@ -16,7 +16,7 @@ const [toCancelId, setToCancelId] = useState(null);
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/get-user-appointments?phone=${userPhone}`);
+        const res = await fetch(`https://mediconnect-backend1-r5kg.onrender.com/get-user-appointments?phone=${userPhone}`);
         const data = await res.json();
         if (data.appointments) {
           setAppointments(data.appointments);
@@ -30,7 +30,7 @@ const [toCancelId, setToCancelId] = useState(null);
 
   const cancelAppointment = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8000/cancel-appointment/${id}`, {
+      const res = await fetch(`https://mediconnect-backend1-r5kg.onrender.com/cancel-appointment/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {
