@@ -12,7 +12,6 @@ Health_Assistant/build/
 venv/
 .venv/ 
 .env
-*.json
 *.pyc
 *.pyo
 *.pyd
