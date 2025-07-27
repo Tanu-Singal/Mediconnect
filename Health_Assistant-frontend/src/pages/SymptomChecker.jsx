@@ -369,11 +369,22 @@ console.log("🧾 full_conversation:", fullConversation);
                      {slots.map((slot) => {
   const isBooked = doctor.booked_slots?.[date]?.includes(slot);
 
-  // ✅ Parse the date and time properly for comparison
-  const slotDateTime = new Date(`${date}T${slot}`);
-  const now = new Date();
+let isoDate = '';
+  if (date && date.includes('/')) {
+    const parts = date.split('/');
+    if (parts.length === 3) {
+      const [day, month, year] = parts;
+      isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    }
+  }
 
-  const isPastDate = slotDateTime < now;
+  // Compare only date (ignore time)
+  const slotDate = new Date(isoDate);
+  const today = new Date();
+  slotDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  const isPastDate = slotDate < today;
   const isDisabled = isBooked || isPastDate;
 
   return (
