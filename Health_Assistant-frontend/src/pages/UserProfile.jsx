@@ -45,8 +45,24 @@ const [toCancelId, setToCancelId] = useState(null);
   };
 
   const formatStatus = (date, time) => {
-    const apptDateTime = new Date(`${date} ${time}`);
-    return apptDateTime < new Date() ? "Completed" : "Upcoming";
+    try {
+    if (!date) return "Invalid";
+
+    const [day, month, year] = date.split('/'); 
+    const isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+
+    const apptDate = new Date(isoDate);
+    if (isNaN(apptDate.getTime())) return "Invalid Date";
+
+    // Get current date at 00:00
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    apptDate.setHours(0, 0, 0, 0);
+
+    return apptDate < today ? "Completed" : "Upcoming";
+  } catch (err) {
+    return "Error";
+  }
   };
 
   return (
