@@ -131,10 +131,23 @@ const Appointment = () => {
                     <div className="flex flex-wrap gap-2 mt-1">
                     {slots.map((slot) => {
                       const isBooked = doc.booked_slots?.[date]?.includes(slot);
-                      const slotDateTime = new Date(`${date} ${slot}`); // combine date & time
-                       const now = new Date();
-                      const isPastDate = slotDateTime < now;
-                      const isdisabled=isBooked || isPastDate
+                         let isoDate = '';
+  if (date && date.includes('/')) {
+    const parts = date.split('/');
+    if (parts.length === 3) {
+      const [day, month, year] = parts;
+      isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    }
+  }
+
+  // Compare only date (ignore time)
+  const slotDate = new Date(isoDate);
+  const today = new Date();
+  slotDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  const isPastDate = slotDate < today;
+  const isdisabled = isBooked || isPastDate;
                       return(
   <button
     key={slot}
