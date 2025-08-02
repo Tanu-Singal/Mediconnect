@@ -171,7 +171,7 @@ async def chat_agent(request:Request):
 async def get_summary(
     ocr_text:str=Form(...),
     phone:str=Form(...),
-    image: UploadFile = File(...)
+    
 ):
     print("Received OCR text:",ocr_text)
     role_prompt = """
@@ -186,16 +186,13 @@ Keep response under 5 lines. Use emojis.
 
 If report is unclear, say: "⚠️ Could not understand this report."
 """
-    file_path = f"uploaded_reports/{phone}_{datetime.now().strftime('%Y%m%d%H%M%S')}_{image.filename}"
-    with open(file_path, "wb") as f:
-        f.write(await image.read())
+    
     summary=ask_gpt(question=ocr_text,role_prompt=role_prompt)
     med_collection.insert_one({
         "phone": phone,
         "summary": summary,
         "timestamp": datetime.now().isoformat(),
-        "type": "lab_report",
-        "image_path": file_path
+        "type": "lab_report"
     })
     return {"summary":summary}
 
