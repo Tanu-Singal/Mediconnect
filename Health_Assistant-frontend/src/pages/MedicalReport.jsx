@@ -8,11 +8,18 @@ const MedicalReport = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const phone=localStorage.getItem("phone");
    const handleSingleUpload =async(e)=>{
-     const files=e.target.files[0];
-     setImage(URL.createObjectURL(files[0]));
-     setSelectedImage(files);
-     setExtractedText("");
-     setLoading(true)
+     const file = e.target.files?.[0];
+
+  if (!file) {
+    alert("❌ No file selected.");
+    return;
+  }
+
+
+  setSelectedImage(file); 
+  setImage(URL.createObjectURL(file));
+  setExtractedText("");
+  setLoading(true);
 
  try {
   const result=await Tesseract.recognize(files,'eng',{
@@ -33,7 +40,7 @@ const MedicalReport = () => {
       const formData = new FormData();
         formData.append("ocr_text", text);
        formData.append("phone", phone);
-       formData.append("image", selectedImage); 
+   
         const res=await fetch("https://mediconnect-backend1-r5kg.onrender.com/rag-summary",{
             method:"POST",
             body:formData
@@ -47,15 +54,10 @@ const MedicalReport = () => {
   }
  }
 
-const handleOCRResult =async(text)=>{
-    const summary=await sendOCRTextToBackend(text)
-    if(summary){
-        setExtractedText(summary)
-    }
-    else{
-        setExtractedText("Failed to get summary")
-    }
-}
+const handleOCRResult = async (text) => {
+  const summary = await sendOCRTextToBackend(text);
+  setExtractedText(summary || "Failed to get summary");
+};
 
 const generateWhatsAppLink = (summary) => {
   const phoneNumber = ""; // Optional: add default number if needed
@@ -64,14 +66,24 @@ const generateWhatsAppLink = (summary) => {
 };
 
   return (
-  <div className="p-6 max-w-xl mx-auto bg-white shadow rounded-xl space-y-4 border border-gray-200">
+ <div className="p-6 max-w-xl mx-auto bg-white shadow rounded-xl space-y-4 border border-gray-200">
     <h2 className="text-xl font-bold text-blue-800">🧾 Upload Medical Report</h2>
 
     {/* Custom file input with emoji */}
-    <label className="flex items-center gap-2 bg-blue-50 border border-blue-200 px-4 py-2 rounded cursor-pointer w-fit hover:bg-blue-100 transition">
-      📤 <span className="text-sm text-blue-700 font-medium">Choose Report Image</span>
-      <input type="file" accept="image/*" onChange={handleSingleUpload } className="hidden" />
-    </label>
+   <label
+  htmlFor="fileUpload"
+  className="flex items-center gap-2 bg-blue-50 border border-blue-200 px-4 py-2 rounded cursor-pointer w-fit hover:bg-blue-100 transition"
+>
+  📤 <span>Choose Report Image</span>
+</label>
+
+<input
+  id="fileUpload"
+  type="file"
+  accept="image/*"
+  onChange={handleSingleUpload}
+  className="hidden"
+/>
 
     {/* Uploaded image preview */}
     {image && (
