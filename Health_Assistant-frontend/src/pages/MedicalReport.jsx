@@ -22,7 +22,7 @@ const MedicalReport = () => {
   setLoading(true);
 
  try {
-  const result=await Tesseract.recognize(files,'eng',{
+  const result=await Tesseract.recognize(file,'eng',{
     logger: (m) => console.log(m),
   })
     const ocrText = result.data.text;
