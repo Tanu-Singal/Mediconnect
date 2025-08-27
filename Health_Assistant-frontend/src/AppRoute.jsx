@@ -19,20 +19,25 @@ function AppRoute() {
 
   return (
     <>
-      {shouldShowNavbar && <Navbar/>}
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/symptom-checker" element={<SymptomChecker/>} />
-        <Route path="/hospital-loc" element={<HospitalLocator />} />
-        <Route path="/appointment" element={<Appointment />} />
-        <Route path="/userprofile" element={<UserProfile />} />
-        <Route path="/profile" element={<ProfileSection />} />
-        <Route path="/medicalReport" element={<MedicalReport />} />
-        <Route path="/VisionReport" element={<VisionReport />} />
-        <Route path="/doctorLogin" element={<DoctorLogin />} />
-        <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
-        <Route path="/" element={<LoginPage />} />
-      </Routes>
+      {/* Navbar */}
+      {shouldShowNavbar && <Navbar />}
+
+      {/* Main Content Wrapper */}
+      <main className={`${shouldShowNavbar ? "pt-24" : ""} min-h-screen bg-gray-50`}>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/symptom-checker" element={<SymptomChecker />} />
+          <Route path="/hospital-loc" element={<HospitalLocator />} />
+          <Route path="/appointment" element={<Appointment />} />
+          <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/profile" element={<ProfileSection />} />
+          <Route path="/medicalReport" element={<MedicalReport />} />
+          <Route path="/VisionReport" element={<VisionReport />} />
+          <Route path="/doctorLogin" element={<DoctorLogin />} />
+          <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+          <Route path="/" element={<LoginPage />} />
+        </Routes>
+      </main>
     </>
   );
 }
