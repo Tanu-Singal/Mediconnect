@@ -2,11 +2,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { Menu, X, LogOut, Home, Phone } from "lucide-react";
+import { toast } from "react-toastify";
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState(localStorage.getItem("role") || "user");
   const [showConfirm, setShowConfirm] = useState(false);
-    const isDoctor = role === "doctor";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isDoctor = role === "doctor";
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -18,72 +22,105 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = async () => {
-  const role = localStorage.getItem("role");
+    const role = localStorage.getItem("role");
 
-  try {
-    await signOut(auth); // Common signOut
-    if (role === "doctor") {
-      localStorage.removeItem("doctorContact");
+    try {
+      await signOut(auth); 
+      if (role === "doctor") {
+        localStorage.removeItem("doctorContact");
+        toast.success("Doctor logged out");
+      } else {
+        localStorage.removeItem("phone");
+        toast.success("User logged out");
+      }
+      localStorage.removeItem("role");
       navigate("/");
-      toast.success("Doctor logged out");
-    } else {
-      localStorage.removeItem("phone");
-      navigate("/");
-      toast.success("User logged out");
+    } catch (error) {
+      toast.error("Logout failed: " + error.message);
     }
-
-    localStorage.removeItem("role"); // Common cleanup
-  } catch (error) {
-    toast.error("Logout failed: " + error.message);
-  }
-};
-
+  };
 
   return (
-    <header className="bg-white shadow border-b py-4 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between">
-        
+    <header className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-md border-b">
+      <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
-        <div className="text-3xl font-bold text-blue-600">
+        <div className="text-3xl font-bold text-blue-600 tracking-wide cursor-pointer">
           Dr.<span className="text-blue-400">Care</span>
         </div>
 
-        {/* Nav Links + Logout */}
-        <div className="mt-4 md:mt-0 flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-6 font-medium text-gray-700">
-          <Link to="/home" className="hover:text-blue-500">Home</Link>
-          <Link to="" className="hover:text-blue-500">Contact</Link>
-          <div className="relative inline-block">
-  <button
-    onClick={() => setShowConfirm(true)}
-    className="bg-red-500 text-white px-4 py-2 rounded"
-  >
-    Logout
-  </button>
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center space-x-8 font-medium text-gray-700">
+          <Link
+            to="/home"
+            className="flex items-center gap-2 hover:text-blue-600 transition-colors"
+          >
+            <Home className="w-5 h-5" /> Home
+          </Link>
+          <Link
+            to=""
+            className="flex items-center gap-2 hover:text-blue-600 transition-colors"
+          >
+            <Phone className="w-5 h-5" /> Contact
+          </Link>
+          <button
+            onClick={() => setShowConfirm(true)}
+            className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
+          >
+            <LogOut className="w-5 h-5" /> Logout
+          </button>
+        </nav>
 
-  {showConfirm && (
-    <div className="absolute top-full mt-2 right-0 bg-white border shadow-md rounded p-4 z-10 w-64">
-      <p className="mb-4 text-sm">Are you sure you want to logout?</p>
-      <div className="flex justify-end gap-2">
-        <button
-          onClick={() => setShowConfirm(false)}
-          className="text-gray-600 hover:text-gray-800"
-        >
-          No
-        </button>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-        >
-          Yes
-        </button>
-      </div>
-    </div>
-  )}
-</div>
+        {/* Mobile Hamburger */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-2 rounded-md hover:bg-gray-100 transition"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white/90 backdrop-blur-md border-t shadow-lg flex flex-col items-center py-4 space-y-4">
+          <Link to="/home" className="hover:text-blue-600">Home</Link>
+          <Link to="" className="hover:text-blue-600">Contact</Link>
+          <button
+            onClick={() => setShowConfirm(true)}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+          >
+            Logout
+          </button>
+        </div>
+      )}
+
+      {/* Logout Confirmation Modal */}
+      {showConfirm && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black/50 z-50">
+          <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full text-center">
+            <h2 className="text-lg font-semibold mb-4">Confirm Logout</h2>
+            <p className="text-gray-600 mb-6">Are you sure you want to logout?</p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => setShowConfirm(false)}
+                className="px-4 py-2 rounded-lg border hover:bg-gray-100 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
 
 export default Navbar;
+
