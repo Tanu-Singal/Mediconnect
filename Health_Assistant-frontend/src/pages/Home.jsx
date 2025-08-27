@@ -1,7 +1,6 @@
 
 import React from "react";
 import h from "../assets/h.jpg"
-import c from "../assets/c.jpg"
 import d from "../assets/d.jpg"
 import { useNavigate } from "react-router-dom";
 import {
