@@ -1,12 +1,24 @@
 
 import React from "react";
+import h from "../assets/h.jpg"
+import c from "../assets/c.jpg"
+import d from "../assets/d.jpg"
 import { useNavigate } from "react-router-dom";
-import { MapPin, Mail, Phone, User, Stethoscope, ClipboardList, Hospital, Search, MessageSquareHeart } from "lucide-react";
-
+import {
+  MapPin,
+  Mail,
+  Phone,
+  User,
+  Stethoscope,
+  ClipboardList,
+  Hospital,
+  MessageSquareHeart,
+} from "lucide-react";
 
 const Home = () => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role") || "user";
+
   const userFeatures = [
     {
       title: "Find & Book Doctors",
@@ -39,20 +51,20 @@ const Home = () => {
       route: "/userprofile",
     },
     {
-    title: "User Account",
-    desc: "Manage account, logout, and more",
-    icon: <User className="w-8 h-8 text-blue-600" />,
-    route: "/profile", 
-  },
+      title: "User Account",
+      desc: "Manage account, logout, and more",
+      icon: <User className="w-8 h-8 text-blue-600" />,
+      route: "/profile",
+    },
   ];
-   const doctorFeatures = [
+
+  const doctorFeatures = [
     {
       title: "Doctor Dashboard",
       desc: "View appointments and manage patients",
       icon: <ClipboardList className="w-8 h-8 text-green-600" />,
       route: "/doctor-dashboard",
     },
- 
     {
       title: "Doctor Profile",
       desc: "Manage your profile & specialties",
@@ -60,11 +72,11 @@ const Home = () => {
       route: "/doctorLogin",
     },
   ];
- const features = role === "doctor" ? doctorFeatures : userFeatures;
+
+  const features = role === "doctor" ? doctorFeatures : userFeatures;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 font-sans">
-
       {/* Hero Section */}
       <section className="py-20 px-6 max-w-7xl mx-auto text-center">
         <h1 className="text-5xl font-bold text-gray-800 leading-tight mb-4">
@@ -73,7 +85,25 @@ const Home = () => {
         <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
           Book appointments, consult AI, manage reports, search hospitals, and more — all in one place.
         </p>
-        
+      </section>
+
+      {/* Feature Banner 1 */}
+      <section className="py-12 bg-blue-100">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 px-6">
+          <img src={h} alt="Doctors" className="w-full md:w-1/2 rounded-2xl shadow-lg" />
+          <div className="md:w-1/2 text-center md:text-left">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Expert Doctors You Can Trust</h2>
+            <p className="text-gray-600 mb-6">
+              Connect with certified healthcare professionals, book appointments instantly, and get personalized care.
+            </p>
+            <button
+              onClick={() => navigate("/appointment")}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md"
+            >
+              Book Now
+            </button>
+          </div>
+        </div>
       </section>
 
       {/* Features Grid */}
@@ -90,6 +120,25 @@ const Home = () => {
               <p className="text-gray-600 text-sm">{desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Feature Banner 2 */}
+      <section className="py-12 bg-gradient-to-r from-blue-50 to-white">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row-reverse items-center gap-8 px-6">
+          <img src={d} alt="Healthcare" className="w-full md:w-1/2 rounded-2xl shadow-lg" />
+          <div className="md:w-1/2 text-center md:text-left">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Your Health, Our Priority</h2>
+            <p className="text-gray-600 mb-6">
+              Get AI-powered symptom analysis, hospital search, and secure health reports to stay ahead of your wellness journey.
+            </p>
+            <button
+              onClick={() => navigate("/symptom-checker")}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md"
+            >
+              Try Symptom Checker
+            </button>
+          </div>
         </div>
       </section>
 
